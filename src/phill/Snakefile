@@ -33,7 +33,7 @@ if SOURCE_ROOT not in os.getenv("PATH"):
 
 subworkflow Nek5000:
     workdir: SOURCE_ROOT
-    snakefile: next(importlib.resources.path('snek5000.snakemake', 'nek5000.smk').gen)
+    snakefile: next(importlib.resources.path('snek5000.assets', 'nek5000.smk').gen)
     configfile: CONFIG
 
 
