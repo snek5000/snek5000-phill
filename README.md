@@ -9,5 +9,8 @@ executed via [snek5000](https://github.com/exabl/snek5000).
 
 ```sh
 pip install -e '.[tests]'
+# Run simple tests: including compilation
 pytest
+# Run slow tests: launches simulation
+pytest --runslow
 ```
