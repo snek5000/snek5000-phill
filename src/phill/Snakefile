@@ -192,35 +192,23 @@ rule generate_map:
         'echo "{params.prefix}\n{params.tolerance}" | '
         '{input.genmap}'
 
-# generate makefile_usr.inc
-rule generate_makefile_usr:
-    input:
-        "templates/makefile_usr.inc.j2"
-    output:
-        "makefile_usr.inc"
-    run:
-        with open(str(output), "w") as fp:
-            Output.write_makefile_usr(fp=fp)
-
 # generate makefile
 rule generate_makefile:
     input:
         f'{CASE}.re2',
         f'{CASE}.ma2',
         f'{CASE}.usr',
-        makefile_usr = "makefile_usr.inc",
         makenek = SOURCE_ROOT + "/bin/makenek"
     output:
         'makefile',
         SOURCE_ROOT + "/3rd_party/gslib/lib/libgs.a"
     params:
         case = f'{CASE}',
-        inc = " ".join((f"-I{inc_dir}" for inc_dir in Output.makefile_usr_sources)),
-        usr = " ".join(Output.makefile_usr_obj)
+        inc = " ".join((f"-I{inc_dir}" for inc_dir in Output().makefile_usr_sources)),
+        usr = " ".join(Output().makefile_usr_obj)
     shell:
         """
         function at_exit {{
-            # echo "include {input.makefile_usr}" >> makefile
             ls -l makefile
             export NOCOMPILE=0
             clean_3rd_party

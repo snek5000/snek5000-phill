@@ -1,7 +1,7 @@
 from snek5000 import logger
 from snek5000.info import InfoSolverMake
 from snek5000.solvers.kth import SimulKTH
-from phill.templates import box, size
+from phill.templates import box, size, makefile_usr
 
 
 class InfoSolverPhill(InfoSolverMake):
@@ -125,6 +125,7 @@ class SimulPhill(SimulKTH):
         super().__init__(params)
         self.output.write_box(box)
         self.output.write_size(size)
+        self.output.write_makefile_usr(makefile_usr)
 
 
 Simul = SimulPhill
