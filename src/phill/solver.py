@@ -61,7 +61,7 @@ class SimulPhill(SimulKTH):
         general = params.nek.general
         general.stop_at = "num_steps"
         general.num_steps = 20
-        general.dt = -2e4
+        general.dt = -2e-4
         general.time_stepper = 'bdf3'
         general.variable_dt = False
         general.target_cfl = 0.3
