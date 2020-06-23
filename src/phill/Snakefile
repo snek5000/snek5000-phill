@@ -111,7 +111,7 @@ rule clean:
         """
         echo "cleaning Nek5000 ..."
         rm -fv {params.case}.f nek5000
-        rm -rf obj makefile_usr.inc
+        rm -rf obj
         rm -fv $SOURCE_ROOT/core/mpif.h
         """
 
@@ -128,6 +128,7 @@ rule cleanall:
     shell:
         """
         snakemake clean cleansimul
+        yes | nekconfig clean
         """
 
 # create an archive with all of our results
@@ -198,7 +199,8 @@ rule generate_makefile:
         f'{CASE}.re2',
         f'{CASE}.ma2',
         f'{CASE}.usr',
-        makenek = SOURCE_ROOT + "/bin/makenek"
+        makenek = SOURCE_ROOT + "/bin/makenek",
+        nekconfig = SOURCE_ROOT + "/bin/nekconfig"
     output:
         'makefile',
         SOURCE_ROOT + "/3rd_party/gslib/lib/libgs.a"
@@ -208,20 +210,12 @@ rule generate_makefile:
         usr = " ".join(Output().makefile_usr_obj)
     shell:
         """
-        function at_exit {{
-            ls -l makefile
-            export NOCOMPILE=0
-            clean_3rd_party
-            make_3rd_party
-            echo "Done"
-        }}
-        trap at_exit EXIT
-
         set +u  # Do not error on undefined bash variables
         export CC="{config[MPICC]}" FC="{config[MPIFC]}" \
             CFLAGS="{config[CFLAGS]}" FFLAGS="{config[FFLAGS]} {params.inc}" \
             USR="{params.usr}"
-        source {input.makenek} {params.case} -nocompile
+        {input.makenek} {params.case} -nocompile
+        {input.nekconfig} -build-dep
         """
 
 # generate sessionfile
