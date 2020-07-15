@@ -4,8 +4,8 @@ on: pull_request
 
 env:
   PIP_CACHE_DIR: ~/.cache/pip
-  NEK_VERSION: v17.0
-  SOURCE_ROOT: /home/runner/Nek5000
+  NEK_VERSION: 19.0
+  NEK_SOURCE_ROOT: /home/runner/Nek5000
 
 jobs:
   build:
@@ -46,7 +46,7 @@ jobs:
       id: nek-cache
       uses: actions/cache@v1
       with:
-        path: ${{ env.SOURCE_ROOT }}
+        path: ${{ env.NEK_SOURCE_ROOT }}
         key: ${{ runner.os }}-nek-${{ env.NEK_VERSION }}
         restore-keys: |
           ${{ runner.os }}-nek-
@@ -55,7 +55,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install .[tests]
-        curl -LO https://github.com/Nek5000/Nek5000/releases/download/${NEK_VERSION}/Nek5000-${NEK_VERSION}.tar.gz
+        curl -LO https://github.com/Nek5000/Nek5000/releases/download/v${NEK_VERSION}/Nek5000-${NEK_VERSION}.tar.gz
         tar -xf Nek5000-${NEK_VERSION}.tar.gz -C ~
 
     - name: Run tests
