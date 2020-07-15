@@ -4,7 +4,7 @@ on: pull_request
 
 env:
   PIP_CACHE_DIR: ~/.cache/pip
-  NEK_VERSION: 19.0
+  NEK_VERSION: "19.0"
   NEK_SOURCE_ROOT: /home/runner/Nek5000
 
 jobs:
