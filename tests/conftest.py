@@ -32,4 +32,7 @@ def sim():
     params.nek.general.stop_at = "numSteps"
     params.nek.general.num_steps = 9
 
+    params.nek.stat.av_step = 3
+    params.nek.stat.io_step = 9
+
     return Simul(params)
