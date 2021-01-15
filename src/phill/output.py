@@ -1,6 +1,6 @@
-import sys
+from snek5000 import mpi
 from snek5000.output.base import Output as OutputBase
-from phill.templates import makefile_usr
+from phill.templates import box, size, makefile_usr
 
 
 class OutputPhill(OutputBase):
@@ -30,3 +30,12 @@ class OutputPhill(OutputBase):
                 ("math_tools.f",),
             ],
         }
+
+    def post_init(self):
+        super().post_init()
+
+        # Write additional source files to compile the simulation
+        if mpi.rank == 0 and self._has_to_save and self.sim.params.NEW_DIR_RESULTS:
+            self.write_box(box)
+            self.write_size(size)
+            self.write_makefile_usr(makefile_usr)
