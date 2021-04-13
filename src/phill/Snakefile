@@ -49,120 +49,21 @@ rule all:
 rule mesh:
     input: f"{CASE}.re2", f"{CASE}.ma2"
 
-# compile
-rule compile:
-    input:
-        f"{CASE}.usr",
-        'makefile_usr.inc',
-        'makefile',
-        *iglob('toolbox/*'),
-        *iglob('sgs/*'),
-        nekconfig = NEK_SOURCE_ROOT + "/bin/nekconfig"
-    output:
-        NEK_SOURCE_ROOT + "/3rd_party/gslib/lib/libgs.a",
-        f'{CASE}.f',
-        exe='nek5000'
-    shell:
-        """
-        {input.nekconfig} -build-dep
-        make -j {output.exe}
-        """
+# compiler and run rules
+# ======================
+module compiler:
+    snakefile: snek5000.get_asset('compiler.smk')
+    config: config
 
-# run
-rule run:
-    input:
-        f'{CASE}.re2',
-        f'{CASE}.ma2',
-        f'{CASE}.par',
-        'SESSION.NAME',
-        'nek5000'
-    log:
-        "logs/run_" + now() + ".log"
-    params:
-        nproc = str(os.cpu_count()),
-        case = f"{CASE}"
-    shell:
-        """
-        ln -sf {log} {params.case}.log
-        echo "Log file: $PWD"/{params.case}.log
-        {config[MPIEXEC]} -n {params.nproc} ./nek5000 > {log} &
-        """
+use rule * from compiler
 
-# on cluster
-rule srun:
-    input:
-        f'{CASE}.re2',
-        f'{CASE}.ma2',
-        f'{CASE}.par',
-        'SESSION.NAME',
-        'nek5000'
-    log:
-        "logs/run_" + now() + ".log"
-    params:
-        nproc = str(os.cpu_count()),
-        case = f"{CASE}"
-    shell:
-        """
-        ln -sf {log} {params.case}.log
-        echo "Log file: $PWD"/{params.case}.log
-        {config[MPIEXEC]} -n {params.nproc} ./nek5000 | tee {log}
-        """
+# I/O rules
+# =========
+module io:
+    snakefile: snek5000.get_asset('io.smk')
+    config: config
 
-# clean compiler output
-rule clean:
-    params:
-        case = f'{CASE}',
-    shell:
-        """
-        echo "cleaning Nek5000 ..."
-        rm -fv {params.case}.f nek5000
-        rm -rf obj
-        rm -fv $NEK_SOURCE_ROOT/core/mpif.h
-        """
-
-# clean simulation files
-rule cleansimul:
-    params:
-        case = f'{CASE}',
-        tarball = tar_name(compress_format=".zst")
-    run:
-        clean_simul(params.case, params.tarball)
-
-# clean everything
-rule cleanall:
-    shell:
-        """
-        snakemake clean cleansimul
-        yes | nekconfig clean
-        """
-
-# create an archive with all of our results
-rule archive:
-    params:
-        solution = sorted(
-            itertools.chain.from_iterable(
-                (
-                    iglob(f'{prefix}{CASE}0.f*')
-                    for prefix in ("", "vgr", "c2D", "sts")
-                )
-            )
-        ),
-        rest = [
-            'SESSION.NAME',
-            'params_simul.xml',
-            'SIZE',
-            *iglob(f'rs6{CASE}0.f*'),
-            f'{CASE}.re2',
-            f'{CASE}.ma2',
-            f'{CASE}.par',
-            f'{CASE}.usr',
-        ],
-        tarball = tar_name()
-    run:
-        archive(params.tarball, params.solution, remove=True)
-        archive(params.tarball, params.rest)
-        archive(params.tarball + ".zst", readonly=True)
-
+use rule * from io
 
 # internal rules
 # ==============
