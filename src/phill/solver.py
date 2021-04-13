@@ -1,4 +1,4 @@
-from snek5000 import logger
+#  from snek5000 import logger
 from snek5000.info import InfoSolverMake
 from snek5000.solvers.kth import SimulKTH
 
@@ -87,7 +87,7 @@ class SimulPhill(SimulKTH):
         # -----------------------
         # https://github.com/KTH-Nek5000/KTH_Examples/blob/master/phill_STAT/phill.box
         oper = params.oper
-        logger.info(oper._doc)
+        # logger.info(oper._doc)
 
         oper.dim = 3
         oper.scalars = 1
@@ -102,9 +102,9 @@ class SimulPhill(SimulKTH):
         # ------------------------
         # https://github.com/KTH-Nek5000/KTH_Examples/blob/master/phill_STAT/SIZE
         # Basic
-        logger.info(oper.elem._doc)
-        logger.info(oper.max._doc)
-        logger.info(oper.misc._doc)
+        #  logger.info(oper.elem._doc)
+        #  logger.info(oper.max._doc)
+        #  logger.info(oper.misc._doc)
 
         oper.elem.order = 6  # lx1
         oper.elem.coef_dealiasing = 2 / 3  # lxd

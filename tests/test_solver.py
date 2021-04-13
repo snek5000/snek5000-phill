@@ -8,8 +8,12 @@ def test_init(sim):
     pass
 
 
-def test_make(sim):
-    assert sim.make.exec(["mesh", "compile"])
+def test_mesh(sim):
+    assert sim.make.exec(["mesh"])
+
+
+def test_compile(sim):
+    assert sim.make.exec(["compile"])
     assert sim.make.exec(["run"], dryrun=True)
 
 
