@@ -114,9 +114,6 @@ class SimulPhill(SimulKTH):
         oper.nproc_min = 8  # lpmin
         oper.nproc_max = 32  # lpmax
 
-        # BDF3
-        oper.max.order_time = 3
-
         oper.misc.fast_diag = False
         return params
 
