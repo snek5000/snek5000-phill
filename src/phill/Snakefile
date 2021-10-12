@@ -13,7 +13,7 @@ configfile: CONFIG
 
 
 # Necessary to pass configuration to other Snakemake modules
-Output.update_snakemake_config(config, CASE)
+Output.update_snakemake_config(config, CASE, warnings=False)
 
 
 # default rule
