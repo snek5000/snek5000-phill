@@ -30,10 +30,10 @@ class SimulPhill(SimulKTH):
     """
     InfoSolver = InfoSolverPhill
 
-    @staticmethod
-    def _complete_params_with_default(params):
+    @classmethod
+    def _complete_params_with_default(cls, params):
         """Add missing default parameters."""
-        params = SimulKTH._complete_params_with_default(params)
+        params = super()._complete_params_with_default(params)
         params.nek.velocity._set_attrib("advection", True)
         return params
 
