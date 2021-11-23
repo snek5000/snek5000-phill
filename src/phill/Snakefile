@@ -1,6 +1,5 @@
 import snek5000
-from phill import short_name
-from phill.output import OutputPhill as Output
+from phill import short_name, Output
 
 
 configfile: "config_simul.yml"

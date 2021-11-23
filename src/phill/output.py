@@ -39,3 +39,6 @@ class OutputPhill(OutputBase):
             self.write_box(box)
             self.write_size(size)
             self.write_makefile_usr(makefile_usr)
+
+
+Output = OutputPhill
