@@ -15,10 +15,12 @@ class InfoSolverPhill(InfoSolverMake):
     """
 
     def _init_root(self):
+        from . import short_name
+
         super()._init_root()
         self.module_name = "phill.solver"
         self.class_name = "Simul"
-        self.short_name = "phill"
+        self.short_name = short_name
 
         self.classes.Output.module_name = "phill.output"
         self.classes.Output.class_name = "OutputPhill"
