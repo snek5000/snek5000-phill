@@ -15,8 +15,7 @@ Provides the following Template_ instances:
 import jinja2
 
 env = jinja2.Environment(
-    loader=jinja2.PackageLoader("snek5000", "assets"),
-    #  loader=jinja2.PackageLoader("phill", "templates"),
+    loader=jinja2.PackageLoader("snek5000", "resources"),
     undefined=jinja2.StrictUndefined,
 )
 
