@@ -69,3 +69,22 @@ rule generate_compile_sh:
 
         template = env.get_template("compile.sh.j2")
         Output.write_compile_sh(template, config, path=output)
+
+
+# create a archive with source files
+# ==================================
+rule source_archive:
+    input:
+        f"{short_name}.box",
+        f"{short_name}.par",
+        f"{short_name}.usr",
+        "SIZE",
+        "compile.sh",
+        "makefile_usr.inc",
+        *list(Output().makefile_usr_sources),
+    output:
+        f"{short_name}_source-archive.tar.gz",
+    shell:
+        """
+        tar cvf {output} {input}
+        """
