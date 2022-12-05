@@ -27,9 +27,8 @@ class InfoSolverPhill(InfoSolverMake):
 
 
 class SimulPhill(SimulKTH):
-    """A solver which compiles and runs using a Snakefile.
+    """A solver which compiles and runs using a Snakefile."""
 
-    """
     InfoSolver = InfoSolverPhill
 
     @classmethod
@@ -63,13 +62,13 @@ class SimulPhill(SimulKTH):
         general.stop_at = "num_steps"
         general.num_steps = 20
         general.dt = -2e-4
-        general.time_stepper = 'bdf3'
+        general.time_stepper = "bdf3"
         general.variable_dt = False
         general.target_cfl = 0.3
-        general.write_control = 'timestep'
+        general.write_control = "timestep"
         general.write_interval = 100
         general.dealiasing = True
-        general.filtering = 'explicit'
+        general.filtering = "explicit"
         general.filter_weight = 0.02
         general.filter_cutoff_ratio = 0.67
 
@@ -78,7 +77,7 @@ class SimulPhill(SimulKTH):
 
         params.nek.pressure.residual_tol = params.nek.velocity.residual_tol = 1e-8
         params.nek.pressure.residual_proj = params.nek.velocity.residual_proj = 1e-8
-        params.nek.velocity.density = 1.
+        params.nek.velocity.density = 1.0
         params.nek.velocity.viscosity = -700
 
         # User parameters for KTH framework
@@ -97,8 +96,8 @@ class SimulPhill(SimulKTH):
         oper.ny = 16
         oper.nz = 19
 
-        oper.Lx = oper.Ly = oper.Lz = 1.
-        oper.boundary = ['P', 'P', 'W', 'W', 'P', 'P']
+        oper.Lx = oper.Ly = oper.Lz = 1.0
+        oper.boundary = ["P", "P", "W", "W", "P", "P"]
 
         # Set SIZE file parameters
         # ------------------------
