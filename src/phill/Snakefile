@@ -57,3 +57,15 @@ module internal:
 
 
 use rule * from internal as internal_*
+
+
+# generate compile.sh
+# ===================
+rule generate_compile_sh:
+    output:
+        "compile.sh",
+    run:
+        from phill.templates import env
+
+        template = env.get_template("compile.sh.j2")
+        Output.write_compile_sh(template, config, path=output)
