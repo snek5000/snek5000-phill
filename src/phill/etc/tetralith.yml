@@ -5,4 +5,3 @@ MPIFC: mpiifort
 MPIEXEC: "mpiexec"
 CFLAGS: "-march=native"
 FFLAGS: "-march=native -mcmodel=medium"
-

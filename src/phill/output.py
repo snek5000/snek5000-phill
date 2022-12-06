@@ -1,10 +1,9 @@
+from phill.templates import box, makefile_usr, size
 from snek5000 import mpi
 from snek5000.output.base import Output as OutputBase
-from phill.templates import box, size, makefile_usr
 
 
 class OutputPhill(OutputBase):
-
     @property
     def makefile_usr_sources(self):
         """

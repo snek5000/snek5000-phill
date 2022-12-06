@@ -4,6 +4,7 @@ from phill import short_name, Output
 
 configfile: "config_simul.yml"
 
+
 ensure_env()
 
 # Necessary to pass configuration to other Snakemake modules
