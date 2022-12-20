@@ -1,6 +1,6 @@
 import pytest
 
-from snek5000.util import prepare_for_restart
+from snek5000 import load_for_restart
 
 
 def test_init(sim):
@@ -9,25 +9,26 @@ def test_init(sim):
 
 
 def test_mesh(sim):
-    assert sim.make.exec(["mesh"])
+    assert sim.make.exec("mesh")
 
 
 def test_compile(sim):
-    assert sim.make.exec(["compile"])
-    assert sim.make.exec(["run"], dryrun=True)
+    assert sim.make.exec("compile")
+    assert sim.make.exec("run", dryrun=True)
 
 
 @pytest.mark.slow
 def test_make_run(sim):
     # Run in foreground
-    assert sim.make.exec(["srun"])
+    assert sim.make.exec("run_fg", nproc=2)
 
     # test outputs
-    print(sim.output.print_stdout.file)
-    dt = sim.output.print_stdout.dt
+    print(sim.output.print_stdout.path_file)
+    df = sim.output.print_stdout.load()
+
     # number of time steps executed, see conftest.py
-    assert dt.size == 9
+    assert df.dt.size == sim.params.nek.general.num_steps
 
     # check if simulation can be restarted
     # TODO: try restart with modified params
-    _ = prepare_for_restart(sim.path_run)
+    _ = load_for_restart(sim.path_run, use_start_from=-1)
