@@ -1,4 +1,3 @@
-#  from snek5000 import logger
 from snek5000.info import InfoSolverMake
 from snek5000.solvers.kth import SimulKTH
 
@@ -32,19 +31,14 @@ class SimulPhill(SimulKTH):
     InfoSolver = InfoSolverPhill
 
     @classmethod
-    def _complete_params_with_default(cls, params):
-        """Add missing default parameters."""
-        params = super()._complete_params_with_default(params)
-        params.nek.velocity._set_attrib("advection", True)
-        return params
-
-    @classmethod
     def create_default_params(cls):
         """Set default values of parameters as given in reference
         implementation.
 
         """
         params = super().create_default_params()
+
+        params.nek.velocity._set_attrib("advection", True)
 
         # Set par file parameters
         # ------------------------
