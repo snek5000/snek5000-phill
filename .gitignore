@@ -63,6 +63,7 @@ __pycache__
 src/*/_version.py
 pip-wheel-metadata
 build/
+dist/
 
 # Jupyter
 .ipynb_checkpoints
