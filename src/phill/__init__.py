@@ -12,6 +12,7 @@ Python package for managing case files.
    templates
 
 """
+
 from ._version import __version__  # noqa: F401
 from .output import Output
 from .solver import Simul

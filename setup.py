@@ -5,6 +5,7 @@
 .. _editable: https://github.com/pypa/packaging-problems/issues/256#issuecomment-504790004
 
 """
+
 from setuptools import setup
 
 setup()
