@@ -2,31 +2,31 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.4.0
+  rev: v6.0.0
   hooks:
   - id: check-toml
   - id: check-yaml
   - id: end-of-file-fixer
   - id: check-added-large-files
 
-- repo: https://github.com/psf/black
-  rev: 23.1.0
+- repo: https://github.com/psf/black-pre-commit-mirror
+  rev: 25.11.0
   hooks:
   - id: black
 - repo: https://github.com/PyCQA/isort
-  rev: 5.12.0
+  rev: 7.0.0
   hooks:
   - id: isort
 - repo: https://github.com/PyCQA/flake8
-  rev: 6.0.0
+  rev: 7.3.0
   hooks:
   - id: flake8
 - repo: https://github.com/snakemake/snakefmt
-  rev: v0.8.2
+  rev: v0.11.2
   hooks:
   - id: snakefmt
 - repo: https://github.com/executablebooks/mdformat
-  rev: 0.7.16
+  rev: 1.0.0
   hooks:
   - id: mdformat
     additional_dependencies:
